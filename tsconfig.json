@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+        "target": "es6",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "module": "esnext",
+        "moduleResolution": "node",
+        "lib": ["es2016", "esnext", "dom"],
+        "strict": true,
+        "strictNullChecks": true,
+        "esModuleInterop": true,
+        "declaration": true,
+        "outDir": "./dist",
+        "strictPropertyInitialization": false,
+  },
+  "exclude": ["./dist"]
+}
