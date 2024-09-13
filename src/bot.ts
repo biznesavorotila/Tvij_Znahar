@@ -19,6 +19,8 @@ bot.use(conversations());
 bot.use(createConversation(askPhoneAndPay));
 
 bot.command('start', startCommand);
+bot.command('cart', getUserCart);
+bot.command('products', catalog);
 
 bot.callbackQuery(EInlineKeyboard.ABOUT_US, aboutUs);
 bot.callbackQuery(EInlineKeyboard.CATALOG, catalog);
