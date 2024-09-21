@@ -1,8 +1,6 @@
 import { bot } from "../../bot";
 import { CartService } from "../../database/cart";
 import { MyContext, MyConversation } from "../../types";
-import { config } from "dotenv";
-config();
 
 const ADMIN_ID = Number(process.env.ADMIN_ID);
 export const askPhoneAndPay = async (conversation: MyConversation, ctx: MyContext) => {

@@ -12,6 +12,7 @@
         "declaration": true,
         "outDir": "./dist",
         "strictPropertyInitialization": false,
+        "resolveJsonModule": true
   },
   "exclude": ["./dist"]
 }

@@ -16,4 +16,10 @@ export enum EInlineKeyboard {
     ADD_TO_CART = 'add-to-cart-command',
     REMOVE_FROM_CART = 'remove-from-cart-command',
     PAYMENT = 'payment-command',
+    COMMENTS = 'comments-command',
+    CREATE_COMMENT = 'create-comment-command',
+    VIEW_COMMENTS = 'view-comments-command',
+    ACCEPT_COMMENT = 'accept-comment-command',
+    REJECT_COMMENT = 'reject-comment-command',
+    CONTACTS = 'contacts-command',
 }

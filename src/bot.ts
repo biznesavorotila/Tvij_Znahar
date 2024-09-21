@@ -1,14 +1,10 @@
 import { Bot, session } from "grammy";
-import { EInlineKeyboard, MyContext, MyConversation, SessionData } from "./types";
+import { EInlineKeyboard, MyContext } from "./types";
 import { startCommand } from "./reply/command";
-import { aboutUs } from "./reply/callbackQuery";
-import { catalog } from "./reply/callbackQuery/catalog.callback-query";
-import { product } from "./reply/callbackQuery/product.callback-query";
-import { addToCart } from "./reply/callbackQuery/addToCard.callback-query";
-import { getUserCart } from "./reply/callbackQuery/getCart.callback-query";
-import { payment } from "./reply/callbackQuery/payment.callback-query";
 import { conversations, createConversation } from "@grammyjs/conversations";
-import { askPhoneAndPay } from "./reply/conversation";
+import { askComment, askPhoneAndPay } from "./reply/conversation";
+import { CommentService } from "./database/comment";
+import { aboutUs, addToCart, catalog, comments, contacts, createComment, getComments, getUserCart, payment, product } from "./reply/callbackQuery";
 
 const BOT_TOKEN = process.env.BOT_TOKEN as string;
 export const bot = new Bot<MyContext>(BOT_TOKEN);
@@ -16,6 +12,7 @@ export const bot = new Bot<MyContext>(BOT_TOKEN);
 // Apply session and conversation middleware
 bot.use(session({ conversation: {}, type: 'multi' })); 
 bot.use(conversations());
+bot.use(createConversation(askComment));
 bot.use(createConversation(askPhoneAndPay));
 
 bot.command('start', startCommand);
@@ -26,6 +23,10 @@ bot.callbackQuery(EInlineKeyboard.ABOUT_US, aboutUs);
 bot.callbackQuery(EInlineKeyboard.CATALOG, catalog);
 bot.callbackQuery(EInlineKeyboard.CART, getUserCart);
 bot.callbackQuery(EInlineKeyboard.PAYMENT, payment);
+bot.callbackQuery(EInlineKeyboard.COMMENTS, comments);
+bot.callbackQuery(EInlineKeyboard.VIEW_COMMENTS, getComments);
+bot.callbackQuery(EInlineKeyboard.CREATE_COMMENT, createComment);
+bot.callbackQuery(EInlineKeyboard.CONTACTS, contacts);
 bot.on('callback_query:data', async ctx => {
     const query = ctx.callbackQuery.data;
     
@@ -47,5 +48,25 @@ bot.on('callback_query:data', async ctx => {
 
         console.log('Add to cart function!');
         await addToCart(ctx, Number(id));
+    }
+
+    // accept comment
+    if (query.includes(EInlineKeyboard.ACCEPT_COMMENT.toString())) {
+        const id = query.split('_')[1];
+        if (!id) 
+            await ctx.answerCallbackQuery('Комментарий не найден!');
+
+        CommentService.acceptComment(Number(id));
+        await ctx.answerCallbackQuery('Комментарий принят!');
+    }
+
+    // accept comment
+    if (query.includes(EInlineKeyboard.REJECT_COMMENT.toString())) {
+        const id = query.split('_')[1];
+        if (!id) 
+            await ctx.answerCallbackQuery('Комментарий не найден!');
+
+        CommentService.rejectComment(Number(id));
+        await ctx.answerCallbackQuery('Комментарий отклонен!');
     }
 });

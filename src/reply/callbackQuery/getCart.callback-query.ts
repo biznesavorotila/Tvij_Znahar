@@ -1,7 +1,7 @@
 import { InlineKeyboard } from "grammy";
 import { EInlineKeyboard, MyContext } from "../../types";
 import { CartService } from "../../database/cart";
-import { ProductEntity } from "../../database/entiy/product.entity";
+import { ProductEntity } from "../../database/entity/product.entity";
 import { dataSource } from "../../database/data-source";
 
 export const getUserCart = async (ctx: MyContext) => {

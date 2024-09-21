@@ -1,7 +1,7 @@
 import { dataSource } from "./database/data-source";
 import { bot } from "./bot";
 import { config } from "dotenv";
-import { ProductEntity } from "./database/entiy/product.entity";
+import { ProductEntity } from "./database/entity/product.entity";
 config();
 
 async function bootstrap() {

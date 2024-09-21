@@ -1,6 +1,6 @@
 import { dataSource } from "../data-source";
-import { CartEntity } from "../entiy/cart.entity";
-import { ProductEntity } from "../entiy/product.entity";
+import { CartEntity } from "../entity/cart.entity";
+import { ProductEntity } from "../entity/product.entity";
 
 export class CartService {
     public static async addToCart(cart: { quantity: number, userId: string, product: number }) {

@@ -2,3 +2,9 @@ export * from './aboutUs.callback-query';
 export * from './addToCard.callback-query';
 export * from './catalog.callback-query';
 export * from './product.callback-query';
+export * from './getCart.callback-query';
+export * from './payment.callback-query';
+export * from './comment/comment.callback-query';
+export * from './comment/create-comment.callback-query';
+export * from './comment/get-comments.callback-query';
+export * from './contacts.callback-query'

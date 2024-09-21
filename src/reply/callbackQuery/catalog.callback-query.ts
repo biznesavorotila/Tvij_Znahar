@@ -1,6 +1,6 @@
 import { Context, InlineKeyboard } from "grammy";
 import { dataSource } from "../../database/data-source";
-import { ProductEntity } from "../../database/entiy/product.entity";
+import { ProductEntity } from "../../database/entity/product.entity";
 import { EInlineKeyboard } from "../../types";
 
 export const catalog = async (ctx: Context) => {
