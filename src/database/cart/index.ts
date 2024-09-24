@@ -22,6 +22,15 @@ export class CartService {
             .getOne();
     } 
 
+    public static async getCartElem(cartId: number) {
+        return await dataSource
+            .getRepository(CartEntity)
+            .createQueryBuilder('cart')
+            .where('cart.id = :cartId', { cartId })
+            .leftJoinAndSelect('cart.product', 'product')
+            .getOneOrFail();
+    }
+
     public static async updateQuantity(cart: CartEntity, quantity: number) {
         return await dataSource
             .getRepository(CartEntity)
@@ -35,5 +44,13 @@ export class CartService {
             .where('cart.userId = :userId', { userId })
             .leftJoinAndSelect('cart.product', 'product')
             .getMany();
+    }
+
+    public static async deleteCart(cartId: number) {
+        return await dataSource
+            .getRepository(CartEntity)
+            .createQueryBuilder('cart')
+            .where('cart.id = :cartId', { cartId })
+            .delete();
     }
 }

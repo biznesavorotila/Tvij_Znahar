@@ -13,8 +13,12 @@ export enum EInlineKeyboard {
     CART = 'cart-command',
     ABOUT_US = 'about-us-command',
     PRODUCT = 'product-command',
+
     ADD_TO_CART = 'add-to-cart-command',
-    REMOVE_FROM_CART = 'remove-from-cart-command',
+    CART_ELEM_INFO = 'cart-elem-info-command',
+    REMOVE_ONE_FROM_CART = 'remove-from-cart-command',
+    DELETE_FROM_CART = 'remove-from-cart-command',
+    
     PAYMENT = 'payment-command',
     COMMENTS = 'comments-command',
     CREATE_COMMENT = 'create-comment-command',

@@ -4,7 +4,8 @@ import { startCommand } from "./reply/command";
 import { conversations, createConversation } from "@grammyjs/conversations";
 import { askComment, askPhoneAndPay } from "./reply/conversation";
 import { CommentService } from "./database/comment";
-import { aboutUs, addToCart, catalog, comments, contacts, createComment, getComments, getUserCart, payment, product } from "./reply/callbackQuery";
+import { aboutUs, catalog, comments, contacts, createComment, getComments, getUserCart, payment, product } from "./reply/callbackQuery";
+import { addToCart, getCartElem } from "./reply/callbackQuery/cart";
 
 const BOT_TOKEN = process.env.BOT_TOKEN as string;
 export const bot = new Bot<MyContext>(BOT_TOKEN);
@@ -39,6 +40,7 @@ bot.on('callback_query:data', async ctx => {
         await product(ctx, Number(id));
     }
 
+    
     // add to card 
     if (query.includes(EInlineKeyboard.ADD_TO_CART.toString())) {
         console.log('Add to cart function! => ', query);
@@ -49,6 +51,21 @@ bot.on('callback_query:data', async ctx => {
         console.log('Add to cart function!');
         await addToCart(ctx, Number(id));
     }
+    // get cart elem info
+    if (query.includes(EInlineKeyboard.CART_ELEM_INFO.toString())) {
+        const id = query.split('_')[1];
+        if (!id) 
+            await ctx.answerCallbackQuery('Товар в корзинке не найден!');
+
+        await getCartElem(ctx, Number(id));
+    }
+    // delete from cart
+    if (query.includes(EInlineKeyboard.DELETE_FROM_CART.toString())) {
+        const id = query.split('_')[1];
+        if (!id) 
+            await ctx.answerCallbackQuery('Товар в корзинке не найден!');
+    }
+
 
     // accept comment
     if (query.includes(EInlineKeyboard.ACCEPT_COMMENT.toString())) {
@@ -59,7 +76,6 @@ bot.on('callback_query:data', async ctx => {
         CommentService.acceptComment(Number(id));
         await ctx.answerCallbackQuery('Комментарий принят!');
     }
-
     // accept comment
     if (query.includes(EInlineKeyboard.REJECT_COMMENT.toString())) {
         const id = query.split('_')[1];
