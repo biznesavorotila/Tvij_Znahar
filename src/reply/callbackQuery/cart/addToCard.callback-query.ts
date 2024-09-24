@@ -1,6 +1,6 @@
 import { InlineKeyboard } from "grammy";
-import { CartService } from "../../database/cart";
-import { EInlineKeyboard, MyContext } from "../../types";
+import { EInlineKeyboard, MyContext } from "../../../types";
+import { CartService } from "../../../database/cart";
 
 export const addToCart = async (ctx: MyContext, productId: number) => {
     const userId = ctx.from?.id.toString();

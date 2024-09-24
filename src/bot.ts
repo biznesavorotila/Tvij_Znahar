@@ -5,7 +5,8 @@ import { conversations, createConversation } from "@grammyjs/conversations";
 import { askComment, askPhoneAndPay } from "./reply/conversation";
 import { CommentService } from "./database/comment";
 import { aboutUs, catalog, comments, contacts, createComment, getComments, getUserCart, payment, product } from "./reply/callbackQuery";
-import { addToCart, getCartElem } from "./reply/callbackQuery/cart";
+import { getCartElem } from "./reply/callbackQuery/cart/getCartElem.callback-query";
+import { addToCart } from "./reply/callbackQuery/cart";
 
 const BOT_TOKEN = process.env.BOT_TOKEN as string;
 export const bot = new Bot<MyContext>(BOT_TOKEN);
