@@ -5,8 +5,7 @@ import { conversations, createConversation } from "@grammyjs/conversations";
 import { askComment, askPhoneAndPay } from "./reply/conversation";
 import { CommentService } from "./database/comment";
 import { aboutUs, catalog, comments, contacts, createComment, getComments, getUserCart, payment, product } from "./reply/callbackQuery";
-import { getCartElem } from "./reply/callbackQuery/cart/getCartElem.callback-query";
-import { addToCart } from "./reply/callbackQuery/cart";
+import { addToCart, deleteCartElem, getCartElem, removeOne } from "./reply/callbackQuery/cart";
 
 const BOT_TOKEN = process.env.BOT_TOKEN as string;
 export const bot = new Bot<MyContext>(BOT_TOKEN);
@@ -35,10 +34,11 @@ bot.on('callback_query:data', async ctx => {
     // view product
     if (query.includes(EInlineKeyboard.PRODUCT.toString())) {
         const id = query.split('_')[1];
-        if (!id) 
-            await ctx.answerCallbackQuery('Продукт не найден!');
-
-        await product(ctx, Number(id));
+        if (!id) {
+            ctx.answerCallbackQuery('Продукт не найден!');
+        } else {
+            await product(ctx, Number(id));
+        }
     }
 
     
@@ -46,44 +46,62 @@ bot.on('callback_query:data', async ctx => {
     if (query.includes(EInlineKeyboard.ADD_TO_CART.toString())) {
         console.log('Add to cart function! => ', query);
         const id = query.split('_')[1];
-        if (!id) 
+        if (!id) {
             await ctx.answerCallbackQuery('Продукт не найден!');
-
-        console.log('Add to cart function!');
-        await addToCart(ctx, Number(id));
+        } else {
+            await addToCart(ctx, Number(id));
+        }
     }
     // get cart elem info
     if (query.includes(EInlineKeyboard.CART_ELEM_INFO.toString())) {
         const id = query.split('_')[1];
-        if (!id) 
+        if (!id) {
             await ctx.answerCallbackQuery('Товар в корзинке не найден!');
+        } else {
+            await getCartElem(ctx, Number(id));
+        }
 
-        await getCartElem(ctx, Number(id));
     }
     // delete from cart
     if (query.includes(EInlineKeyboard.DELETE_FROM_CART.toString())) {
         const id = query.split('_')[1];
-        if (!id) 
+        console.log('DELETE FROM CART: ', id);
+        if (!id) {
             await ctx.answerCallbackQuery('Товар в корзинке не найден!');
+        } else {
+            deleteCartElem(ctx, Number(id));
+        }
+    }
+    // reduce quantity from cart
+    if (query.includes(EInlineKeyboard.REMOVE_ONE_FROM_CART.toString())) {
+        const id = query.split('_')[1];
+        if (!id) {
+            await ctx.answerCallbackQuery('Товар в корзинке не найден!');
+        } else {
+            await removeOne(ctx, Number(id));
+        }
     }
 
 
     // accept comment
     if (query.includes(EInlineKeyboard.ACCEPT_COMMENT.toString())) {
         const id = query.split('_')[1];
-        if (!id) 
+        if (!id) {
             await ctx.answerCallbackQuery('Комментарий не найден!');
+        } else {
+            CommentService.acceptComment(Number(id));
+            await ctx.answerCallbackQuery('Комментарий принят!');
 
-        CommentService.acceptComment(Number(id));
-        await ctx.answerCallbackQuery('Комментарий принят!');
+        }
     }
-    // accept comment
+    // reject comment
     if (query.includes(EInlineKeyboard.REJECT_COMMENT.toString())) {
         const id = query.split('_')[1];
-        if (!id) 
+        if (!id) {
             await ctx.answerCallbackQuery('Комментарий не найден!');
-
-        CommentService.rejectComment(Number(id));
-        await ctx.answerCallbackQuery('Комментарий отклонен!');
+        } else {
+            CommentService.rejectComment(Number(id));
+            await ctx.answerCallbackQuery('Комментарий отклонен!');
+        }
     }
 });

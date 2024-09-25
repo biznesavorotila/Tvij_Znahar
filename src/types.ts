@@ -16,8 +16,8 @@ export enum EInlineKeyboard {
 
     ADD_TO_CART = 'add-to-cart-command',
     CART_ELEM_INFO = 'cart-elem-info-command',
-    REMOVE_ONE_FROM_CART = 'remove-from-cart-command',
-    DELETE_FROM_CART = 'remove-from-cart-command',
+    REMOVE_ONE_FROM_CART = 'remove-one-from-cart-command',
+    DELETE_FROM_CART = 'delete-from-cart-command',
     
     PAYMENT = 'payment-command',
     COMMENTS = 'comments-command',

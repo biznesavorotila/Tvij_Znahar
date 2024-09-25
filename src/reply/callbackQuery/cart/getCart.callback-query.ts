@@ -18,7 +18,7 @@ export const getUserCart = async (ctx: MyContext) => {
     const inlineKeyboard = new InlineKeyboard();
     cart.forEach((elem, index) => {
         inlineKeyboard.text(
-            `${elem.product.name} x ${elem.quantity} шт. - ${elem.product.price * elem.quantity} грн.`, 
+            `${elem.product.name} - ${elem.product.price} грн. x ${elem.quantity} шт. - ${elem.product.price * elem.quantity} грн.`, 
             `${EInlineKeyboard.CART_ELEM_INFO}_${elem.id}`
         ).row();
     });

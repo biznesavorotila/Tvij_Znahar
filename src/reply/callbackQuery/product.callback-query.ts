@@ -8,9 +8,11 @@ export const product = async (ctx: Context, id: number) => {
     if (!product) 
         return await ctx.answerCallbackQuery('Продукт не найден!');
 
-    const replayText = `<i><b>${product.name}</b></i>\n` +
+    const replyText = `<i><b>${product.name}</b></i>\n` +
     `${product.description}\n\n` +
     `💸<b>${product.price}</b> грн.💸`
+
+    console.log('Product: ', product);
 
     const inlineKeyboard = new InlineKeyboard()
         .text('Добавить в корзинку', `${EInlineKeyboard.ADD_TO_CART}_${id}`).row()
@@ -18,7 +20,7 @@ export const product = async (ctx: Context, id: number) => {
 
         
     await ctx.replyWithPhoto(product.image);
-    await ctx.reply(replayText, {
+    await ctx.reply(replyText, {
         parse_mode: 'HTML',
         reply_markup: inlineKeyboard
     })

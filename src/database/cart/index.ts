@@ -46,11 +46,21 @@ export class CartService {
             .getMany();
     }
 
-    public static async deleteCart(cartId: number) {
+    public static async deleteCartById(cartId: number) {
+        return await dataSource
+            .getRepository(CartEntity)
+            .createQueryBuilder()
+            .delete()
+            .from(CartEntity)
+            .where('id = :cartId', { cartId })
+            .execute(); 
+    }
+
+    public static async deleteCart(cart: CartEntity) {
         return await dataSource
             .getRepository(CartEntity)
             .createQueryBuilder('cart')
-            .where('cart.id = :cartId', { cartId })
+            .where(cart)
             .delete();
     }
 }
