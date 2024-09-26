@@ -6,6 +6,7 @@ import { askComment, askPhoneAndPay } from "./reply/conversation";
 import { CommentService } from "./database/comment";
 import { aboutUs, catalog, comments, contacts, createComment, getComments, getUserCart, payment, product } from "./reply/callbackQuery";
 import { addToCart, deleteCartElem, getCartElem, removeOne } from "./reply/callbackQuery/cart";
+import { productCatalog } from "./reply/callbackQuery/product_catalog.callback-query";
 
 const BOT_TOKEN = process.env.BOT_TOKEN as string;
 export const bot = new Bot<MyContext>(BOT_TOKEN);
@@ -34,10 +35,14 @@ bot.on('callback_query:data', async ctx => {
     // view product
     if (query.includes(EInlineKeyboard.PRODUCT.toString())) {
         const id = query.split('_')[1];
+        const isCatalog = query.split('_')[2] === 'true';
         if (!id) {
             ctx.answerCallbackQuery('Продукт не найден!');
         } else {
-            await product(ctx, Number(id));
+            if (isCatalog)
+                await productCatalog(ctx, Number(id));
+            else
+                await product(ctx, Number(id));
         }
     }
 
