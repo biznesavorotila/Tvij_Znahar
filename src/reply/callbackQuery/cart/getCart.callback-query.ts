@@ -6,14 +6,14 @@ export const getUserCart = async (ctx: MyContext) => {
     const userId = ctx.from?.id.toString();
     if (!userId)
         return await ctx.answerCallbackQuery(
-            'Ошибка при получении корзины, не найден айди пользователя!'
+            'Помилка при отриманні кошика, не знайдено будь-якого користувача!'
         );
     
     const cart = await CartService.getUserCart(userId);
     const totalSum = cart.reduce((acc, elem) => acc + elem.quantity * elem.product.price!, 0);
 
-    const replyText = `Ваша корзинка. Нажмите на товар, что бы редактировать его!\n` +
-    `\n<b>В сумме: ${totalSum} грн.</b>`;
+    const replyText = `Ваш кошик. Натисніть на товар, щоб редагувати його!\n` +
+    `\n<b>У сумі: ${totalSum} грн.</b>`;
 
     const inlineKeyboard = new InlineKeyboard();
     cart.forEach((elem, index) => {
@@ -22,11 +22,11 @@ export const getUserCart = async (ctx: MyContext) => {
             `${EInlineKeyboard.CART_ELEM_INFO}_${elem.id}`
         ).row();
     });
-    inlineKeyboard.text(`Перейти к оплате корзинки - ${totalSum} грн.`, EInlineKeyboard.PAYMENT);
+    inlineKeyboard.text(`Перейти до оплати кошика - ${totalSum} грн.`, EInlineKeyboard.PAYMENT);
 
     if (cart.length === 0) {
-        const replyText = `<b>Корзинка пуста!</b>\n\n Вы можете добавить товар в корзинку нажав на кнопку ` +
-        `<b>"Продукция"</b> -> Выберите товар -> "<b>Добавить в корзинку</b>"`;
+        const replyText = `<b>Кошик порожній!</b>\n\n Ви можете додати товар до кошика, натиснувши на кнопку ` +
+        `<b>"Продукція"</b> -> Виберіть товар -> "<b>Додати до кошика</b>"`;
 
         return await ctx.reply(replyText, { 
             parse_mode: 'HTML'

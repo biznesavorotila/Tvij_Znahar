@@ -6,7 +6,7 @@ export const catalog = async (ctx: Context) => {
     const products = (await ProductService.getProducts({ isParentNull: true })).sort((a, b) => a.price! - b.price!);
 
     const imageUrl = 'https://shop.kew.org/media/catalog/product/cache/885b485af1f21add4118cd522bc22c77/m/u/mushroom_col_atlas_concertina.jpg';
-    const relpyText = 'Каталог всех товаров. Приятных покупок!';
+    const relpyText = 'Каталог усіх товарів. Приємних покупок!';
 
     const inlineKeyboard = new InlineKeyboard();
     products.forEach(product => {

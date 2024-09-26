@@ -5,12 +5,12 @@ import { EInlineKeyboard, MyContext } from "../../../types";
 export const deleteCartElem = async (ctx: MyContext, cartId: number) => {
     const user = ctx.from;
     if (!user) {
-        return await ctx.answerCallbackQuery('Ошибка при получении пользователя!');
+        return await ctx.answerCallbackQuery('Помилка при отриманні користувача!');
     }
 
     await CartService.deleteCartById(cartId)
         .then(async () => {
-            const replyText = `Продукт удален с вашей корзинки!`;
+            const replyText = `Продукт видалено з вашого кошика!`;
             const inlineKeyboard = new InlineKeyboard()
                 .text('Назад', EInlineKeyboard.CART).row();
 
@@ -21,6 +21,6 @@ export const deleteCartElem = async (ctx: MyContext, cartId: number) => {
         })
         .catch(async (err) => {
             console.log('RemoveOne: ', err);
-            return await ctx.answerCallbackQuery('Ошибка при попытке удалить товар с корзинки!');
+            return await ctx.answerCallbackQuery('Помилка при спробі видалити товар із кошика!');
         });
 }

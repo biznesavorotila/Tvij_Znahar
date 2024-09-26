@@ -37,7 +37,7 @@ bot.on('callback_query:data', async ctx => {
         const id = query.split('_')[1];
         const isCatalog = query.split('_')[2] === 'true';
         if (!id) {
-            ctx.answerCallbackQuery('Продукт не найден!');
+            ctx.answerCallbackQuery('Продукт не знайдено!');
         } else {
             if (isCatalog)
                 await productCatalog(ctx, Number(id));
@@ -49,10 +49,9 @@ bot.on('callback_query:data', async ctx => {
     
     // add to card 
     if (query.includes(EInlineKeyboard.ADD_TO_CART.toString())) {
-        console.log('Add to cart function! => ', query);
         const id = query.split('_')[1];
         if (!id) {
-            await ctx.answerCallbackQuery('Продукт не найден!');
+            await ctx.answerCallbackQuery('Продукт не знайдено!');
         } else {
             await addToCart(ctx, Number(id));
         }
@@ -61,7 +60,7 @@ bot.on('callback_query:data', async ctx => {
     if (query.includes(EInlineKeyboard.CART_ELEM_INFO.toString())) {
         const id = query.split('_')[1];
         if (!id) {
-            await ctx.answerCallbackQuery('Товар в корзинке не найден!');
+            await ctx.answerCallbackQuery('Товар у кошику не знайдено!');
         } else {
             await getCartElem(ctx, Number(id));
         }
@@ -72,7 +71,7 @@ bot.on('callback_query:data', async ctx => {
         const id = query.split('_')[1];
         console.log('DELETE FROM CART: ', id);
         if (!id) {
-            await ctx.answerCallbackQuery('Товар в корзинке не найден!');
+            await ctx.answerCallbackQuery('Товар у кошику не знайдено!');
         } else {
             deleteCartElem(ctx, Number(id));
         }
@@ -81,7 +80,7 @@ bot.on('callback_query:data', async ctx => {
     if (query.includes(EInlineKeyboard.REMOVE_ONE_FROM_CART.toString())) {
         const id = query.split('_')[1];
         if (!id) {
-            await ctx.answerCallbackQuery('Товар в корзинке не найден!');
+            await ctx.answerCallbackQuery('Товар у кошику не знайдено!');
         } else {
             await removeOne(ctx, Number(id));
         }
@@ -92,10 +91,10 @@ bot.on('callback_query:data', async ctx => {
     if (query.includes(EInlineKeyboard.ACCEPT_COMMENT.toString())) {
         const id = query.split('_')[1];
         if (!id) {
-            await ctx.answerCallbackQuery('Комментарий не найден!');
+            await ctx.answerCallbackQuery('Коментар не знайдено!');
         } else {
             CommentService.acceptComment(Number(id));
-            await ctx.answerCallbackQuery('Комментарий принят!');
+            await ctx.answerCallbackQuery('Коментар прийнятий!');
 
         }
     }
@@ -103,10 +102,10 @@ bot.on('callback_query:data', async ctx => {
     if (query.includes(EInlineKeyboard.REJECT_COMMENT.toString())) {
         const id = query.split('_')[1];
         if (!id) {
-            await ctx.answerCallbackQuery('Комментарий не найден!');
+            await ctx.answerCallbackQuery('Коментар не знайдено!');
         } else {
             CommentService.rejectComment(Number(id));
-            await ctx.answerCallbackQuery('Комментарий отклонен!');
+            await ctx.answerCallbackQuery('Коментар відхилений!');
         }
     }
 });

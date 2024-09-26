@@ -5,7 +5,7 @@ import { EInlineKeyboard, MyContext } from "../../types";
 export const productCatalog = async (ctx: MyContext, parentId: number) => {
     const parentProduct = await ProductService.getProduct(parentId);
     if (!parentProduct) {
-        return await ctx.answerCallbackQuery('Продукт не найден!');
+        return await ctx.answerCallbackQuery('Продукт не знайдено!');
     }
     const products = (await ProductService.getProducts({ parentId })).sort((a, b) => a.price! - b.price!);
 
@@ -18,7 +18,7 @@ export const productCatalog = async (ctx: MyContext, parentId: number) => {
     });
     const replyText = `📦 Каталог <b>${parentProduct.name}</b> 📦\n\n` +
     `${parentProduct.description}\n\n` +
-    `<b>Всего продуктов: ${products.length}</b>`;
+    `<b>Усього продуктів: ${products.length}</b>`;
 
     await ctx.replyWithPhoto(parentProduct.image);
     return await ctx.reply(replyText, {

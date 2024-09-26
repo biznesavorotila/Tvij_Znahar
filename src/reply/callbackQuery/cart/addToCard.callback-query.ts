@@ -6,7 +6,7 @@ export const addToCart = async (ctx: MyContext, productId: number) => {
     const userId = ctx.from?.id.toString();
     if (!userId)
         return await ctx.answerCallbackQuery(
-            'Ошибка при добавлении товара в корзину, не найден айди пользователя!'
+            'Помилка при додаванні товару в кошик, не знайдено будь-якого користувача!'
         );
 
     const cart = await CartService.getSpecCart(userId, productId);
@@ -15,29 +15,29 @@ export const addToCart = async (ctx: MyContext, productId: number) => {
         CartService.updateQuantity(cart, cart.quantity + 1)
         .then(async () => {
             return await ctx.reply(
-                `Товар уже в корзине! Обновленное количество товара <b><i>${cart.product.name}</i></b> - ${cart.quantity + 1} шт.`,
+                `Товар уже в кошику! Оновлена ​​кількість товару <b><i>${cart.product.name}</i></b> - ${cart.quantity + 1} шт.`,
                 {
-                    reply_markup: new InlineKeyboard().text('Корзинка', EInlineKeyboard.CART), 
+                    reply_markup: new InlineKeyboard().text('Кошик', EInlineKeyboard.CART), 
                     parse_mode: 'HTML' 
                 }
             );
         })
         .catch(async () => {
-            return await ctx.answerCallbackQuery('Произошла ошибка при обновлении количества товара в корзинке!');
+            return await ctx.answerCallbackQuery('Виникла помилка при оновленні кількості товару в кошику!');
         });
     } else {
         // if new
         CartService.addToCart({ userId, product: productId, quantity: 1 })
         .then(async () => {
             return await ctx.reply(
-                'Товар добавлен в корзину!',
+                'Товар доданий до кошика!',
                 {
-                    reply_markup: new InlineKeyboard().text('Корзинка', EInlineKeyboard.CART),
+                    reply_markup: new InlineKeyboard().text('Кошик', EInlineKeyboard.CART),
                 }
             );
         })
         .catch(async () => {
-            return await ctx.answerCallbackQuery('Произошла ошибка при добавлении в корзину!');
+            return await ctx.answerCallbackQuery('Виникла помилка при додаванні в кошик!');
         });
     }
 }

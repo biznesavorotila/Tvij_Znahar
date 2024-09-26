@@ -5,19 +5,19 @@ import { EInlineKeyboard, MyContext } from "../../../types";
 export const removeOne = async (ctx: MyContext, productId: number) => {
     const user = ctx.from;
     if (!user) {
-        return await ctx.answerCallbackQuery('Ошибка при получении пользователя!');
+        return await ctx.answerCallbackQuery('Помилка при отриманні користувача!');
     }
 
     const cartElem = await CartService.getSpecCart(user.id.toString(), productId);
     if (!cartElem) {
-        return await ctx.answerCallbackQuery('Товар в корзинке не найден!');
+        return await ctx.answerCallbackQuery('Товар у кошику не знайдено!');
     }
 
     // if min quantity
     if (cartElem.quantity === 1) {
-        const replyText = `Минимальное количество товара <i><b>${cartElem.product.name}</b></i> - 1 шт.,` + 
-            ` вы не модете уменьшить количество.\n\n` + 
-            `<b>Если хотите удалить товар, нажмите <u><i>"Удалить с корзины"</i></u></b>`;
+        const replyText = `Мінімальна кількість товару <i><b>${cartElem.product.name}</b></i> - 1 шт.,` + 
+            ` ви не можете зменшити кількість.\n\n` + 
+            `<b>Якщо хочете видалити товар, натисніть <u><i>"Видалити з кошика"</i></u></b>`;
         
         return await ctx.reply(replyText, {
             reply_markup: new InlineKeyboard()
@@ -28,10 +28,10 @@ export const removeOne = async (ctx: MyContext, productId: number) => {
 
     await CartService.updateQuantity(cartElem, cartElem.quantity - 1)
     .then(async (res) => {
-        const replyText = `1 шт. товара убрана из корзины! Обнловленное количество` +
+        const replyText = `1 шт. товару прибрано з кошика! Обновлена ​​кількість` +
             `товара <i><b>${cartElem.product.name}</b></i>: ${res.quantity} шт.`;
         const inlineKeyboard = new InlineKeyboard()
-            .text('Корзинка', EInlineKeyboard.CART).row();
+            .text('Кошик', EInlineKeyboard.CART).row();
 
         return await ctx.reply(replyText, {
             reply_markup: inlineKeyboard,
@@ -40,6 +40,6 @@ export const removeOne = async (ctx: MyContext, productId: number) => {
     })
     .catch(async (err) => {
         console.log('RemoveOne: ', err);
-        return await ctx.answerCallbackQuery('Ошибка при попытке поменять количество товара!');
+        return await ctx.answerCallbackQuery('Помилка при спробі змінити кількість товару!');
     });
 }

@@ -8,15 +8,15 @@ export const askComment = async (conversation: MyConversation, ctx: MyContext) =
     try {
         const user = ctx.from;
         if (!user) {
-            return await ctx.answerCallbackQuery('Ошибка при получении пользователя!');
+            return await ctx.answerCallbackQuery('Помилка при отриманні користувача!');
         }
         
-        await ctx.reply('Напишите, пожалуйста, ваш отзыв: ');
+        await ctx.reply('Напишіть, будь ласка, ваш відгук: ');
         const newComment = await conversation.form.text();
         
         CommentService.createComment({ comment: newComment, user: user.first_name })
         .then(async (res) => {
-            await ctx.answerCallbackQuery('Ваш отзыв успешно добавлен!');
+            await ctx.answerCallbackQuery('Ваш відгук успішно доданий!');
             
             // send to moderation
             const newCommentId = res.identifiers[0].id;
@@ -31,13 +31,13 @@ export const askComment = async (conversation: MyConversation, ctx: MyContext) =
         })
         .catch(async err => {
             console.log(err);
-            await ctx.answerCallbackQuery('Произошла ошибка при добавлении отзыва!');
+            await ctx.answerCallbackQuery('Виникла помилка при додаванні відгуку!');
             return;
         }).finally(async () => {
             return;
         });
     } catch (e) {
         console.log(e);
-        return await ctx.answerCallbackQuery('Произошла ошибка при добавлении отзыва!'); 
+        return await ctx.answerCallbackQuery('Виникла помилка при додаванні відгуку!'); 
     }
 }
