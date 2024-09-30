@@ -8,12 +8,14 @@ export class ProductService {
 
         if (isParentNull !== undefined) {
             queryBuilder
-                .andWhere(`product.parent IS ${isParentNull ? 'NULL' : 'NOT NULL'}`)
+                .andWhere(`product.product_id IS ${isParentNull ? 'NULL' : 'NOT NULL'}`)
         }        
         if (parentId !== undefined) {
             queryBuilder
                 .andWhere('product.product_id = :parentId', { parentId })
         }
+
+        queryBuilder.orderBy('product.id', 'ASC');
 
         return await queryBuilder.getMany();
     }
@@ -23,6 +25,7 @@ export class ProductService {
             .getRepository(ProductEntity)
             .createQueryBuilder('product')
             .where('product.id = :id', { id })
+            .orderBy('product.id', 'DESC')
             .getOne();
     }
 }

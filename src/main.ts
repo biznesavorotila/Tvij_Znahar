@@ -17,7 +17,7 @@ async function bootstrap() {
     });
     bot.start();
 
-    console.log('Strated bot...');
+    console.log('Starting bot...');
 }
 
 bootstrap();

@@ -3,7 +3,9 @@ import { EInlineKeyboard } from "../../types";
 import { ProductService } from "../../database/product";
 
 export const catalog = async (ctx: Context) => {
-    const products = (await ProductService.getProducts({ isParentNull: true })).sort((a, b) => a.price! - b.price!);
+    const products = (await ProductService.getProducts({ isParentNull: true }));
+
+    console.log('PRODUCTS: ', products);
 
     const imageUrl = 'https://shop.kew.org/media/catalog/product/cache/885b485af1f21add4118cd522bc22c77/m/u/mushroom_col_atlas_concertina.jpg';
     const relpyText = 'Каталог усіх товарів. Приємних покупок!';

@@ -16,6 +16,7 @@ export const productCatalog = async (ctx: MyContext, parentId: number) => {
             `${EInlineKeyboard.PRODUCT}_${product.id}`
         ).row();
     });
+    inlineKeyboard.text('Назад ⬅️', EInlineKeyboard.CATALOG);
     const replyText = `📦 Каталог <b>${parentProduct.name}</b> 📦\n\n` +
     `${parentProduct.description}\n\n` +
     `<b>Усього продуктів: ${products.length}</b>`;
