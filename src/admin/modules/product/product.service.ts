@@ -31,8 +31,10 @@ class ProductService {
         // delete cart
         await dataSource.getRepository(CartEntity)
             .createQueryBuilder('cart')
-            .where('cart.productId = :productId', { productId })
-            .delete();
+            .leftJoinAndSelect('cart.product', 'product')
+            .where('product.id = :productId', { productId })
+            .delete()
+            .execute();
 
         await dataSource.getRepository(ProductEntity).delete({ id: productId });
     }
