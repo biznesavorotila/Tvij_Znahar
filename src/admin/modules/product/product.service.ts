@@ -8,11 +8,16 @@ class ProductService {
         return await dataSource.getRepository(ProductEntity).save(newProduct);
     }
 
-    async getAll() {
-        return await dataSource.getRepository(ProductEntity)
+    async getAll(isCatalog?: boolean | undefined) {
+        const query = await dataSource.getRepository(ProductEntity)
             .createQueryBuilder('product')
             .leftJoinAndSelect('product.parent', 'parent')
-            .getMany();
+            
+        if (isCatalog !== undefined) {
+            query.where({ isCatalog })
+        }
+        
+        return await query.getMany();
     }
 
     async getProduct(id: number) {

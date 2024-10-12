@@ -25,9 +25,8 @@ class ProductController {
         res.send();
     }
 
-    async getAll(req: Request<any>, res: Response) {
-        const products = await ProductService.getAll();
-        console.log(products);
+    async getAll(req: ExpressRequest<{}, {}, {}, { isCatalog?: boolean }>, res: Response) {
+        const products = await ProductService.getAll(req.query.isCatalog);
         res.send(products);
     }
 
