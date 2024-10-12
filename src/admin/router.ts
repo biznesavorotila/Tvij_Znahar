@@ -5,6 +5,11 @@ import PostController from "./modules/post/post.controller";
 
 export const router = Router();
 
+// Test
+router.get('/hello', (req, res) => { 
+    res.send('Hello There!').status(200);
+});
+
 // Product
 router.post('/product/create', upload.single('image'), ProductController.create);
 router.get('/product/getAll', ProductController.getAll);
