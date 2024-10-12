@@ -8,10 +8,6 @@ export type TProductCreate = {
     isPublished: boolean;
 }
 
-export type TProductGetAll = {
-
-}
-
 export type TProductGetOne = {
     id: number,
 }
