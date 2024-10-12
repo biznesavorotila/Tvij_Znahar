@@ -27,7 +27,7 @@ async function bootstrap() {
     console.log("Bot has been initialized! ✅")
 
     // init server
-    app.listen(process.env.SERVER_PORT, () => console.log(`Admin server has been initialized ✅`));
+    app.listen(process.env.PORT, () => console.log(`Admin server has been initialized ✅`));
 
 }
 
