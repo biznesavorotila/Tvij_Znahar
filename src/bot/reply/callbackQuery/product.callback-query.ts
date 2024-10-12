@@ -16,7 +16,7 @@ export const product = async (ctx: Context, id: number) => {
         .text('Назад', EInlineKeyboard.CATALOG)
 
         
-    await ctx.replyWithPhoto(`${process.env.STATIC_FILES_URL}/${product.image}`);
+    await ctx.replyWithPhoto(product.image);
     await ctx.reply(replyText, {
         parse_mode: 'HTML',
         reply_markup: inlineKeyboard

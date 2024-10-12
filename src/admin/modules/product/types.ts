@@ -5,6 +5,7 @@ export type TProductCreate = {
     image: string,
     isCatalog: boolean;
     product_id?: number;
+    isPublished: boolean;
 }
 
 export type TProductGetAll = {
