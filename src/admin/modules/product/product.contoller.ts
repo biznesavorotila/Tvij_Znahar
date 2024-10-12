@@ -13,6 +13,7 @@ class ProductController {
     async update(req: ExpressRequest<{ id: string }, any, Partial<TProductCreate>>, res: Response) { 
         const productId = Number(req.params.id);
 
+        console.log(req.body.image);
         await ProductService.update(productId, req.body);
         
         res.status(200).send();
