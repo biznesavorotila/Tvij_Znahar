@@ -14,6 +14,7 @@ router.get('/hello', (req, res) => {
 router.post('/product/create', upload.single('image'), ProductController.create);
 router.get('/product/getAll', ProductController.getAll);
 router.get('/product/getOne/:id', ProductController.getOne);
+router.patch('/product/update/:id', upload.single('image'), ProductController.update);
 
 // User
 router.post('/post/create', upload.single('image'), PostController.createOne);

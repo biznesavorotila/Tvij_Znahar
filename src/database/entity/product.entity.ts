@@ -23,4 +23,7 @@ export class ProductEntity {
 
     @Column({ type: 'bool', default: false })
     isCatalog: boolean;
+
+    @Column({ type: 'bool', default: true })
+    isPublished: boolean;
 }

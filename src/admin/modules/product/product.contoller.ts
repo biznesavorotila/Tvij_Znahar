@@ -1,6 +1,6 @@
-import { Response } from "express";
+import { Response, Request as ExpressRequest } from "express";
 import { Request, RequestParams } from '../../types';
-import { TProductCreate, TProductGetOne } from "./types";
+import { TProductCreate } from "./types";
 import ProductService from "./product.service";
 
 class ProductController {
@@ -10,8 +10,12 @@ class ProductController {
         res.status(201).send(); // created
     }
 
-    async update(req: Request<any>, res: Response) { 
-    
+    async update(req: ExpressRequest<{ id: string }, any, Partial<TProductCreate>>, res: Response) { 
+        const productId = Number(req.params.id);
+
+        await ProductService.update(productId, req.body);
+        
+        res.status(200).send();
     }
 
     async delete(req: Request<any>, res: Response) {
