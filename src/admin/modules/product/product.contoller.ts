@@ -13,8 +13,6 @@ class ProductController {
     async update(req: ExpressRequest<{ id: string }, any, Partial<TProductCreate>>, res: Response) { 
         const productId = Number(req.params.id);
 
-        console.log("image => ", req.file);
-        console.log("image => ", req.body.image);
         await ProductService.update(productId, req.body);
         
         res.status(200).send();
@@ -23,7 +21,7 @@ class ProductController {
     async delete(req: RequestParams<{ id: string }>, res: Response) {
         const productId = Number(req.params.id);
         await ProductService.deleteProduct(productId);
-        
+
         res.send();
     }
 
