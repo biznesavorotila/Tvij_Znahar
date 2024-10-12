@@ -20,8 +20,11 @@ class ProductController {
         res.status(200).send();
     }
 
-    async delete(req: Request<any>, res: Response) {
-
+    async delete(req: RequestParams<{ id: string }>, res: Response) {
+        const productId = Number(req.params.id);
+        await ProductService.deleteProduct(productId);
+        
+        res.send();
     }
 
     async getAll(req: Request<any>, res: Response) {
