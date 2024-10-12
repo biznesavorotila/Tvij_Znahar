@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, } from "typeorm";
-import { ECommentState } from "../../enum/comment-state.enum";
+import { ECommentState } from "../../bot/enum/comment-state.enum";
 
 @Entity({ name: 'comment' })
 export class CommentEntity {
