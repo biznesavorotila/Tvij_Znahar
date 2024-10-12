@@ -8,7 +8,7 @@ const storage = multer.diskStorage({
     },
     filename: function (req, file, cb) {
         console.log("file => ", file);
-        const name = crypto.randomUUID() + "-" + file.originalname;
+        const name = crypto.randomUUID() + "-" + file.originalname.split('.')[1];
         req.body.image = `${process.env.STATIC_FILES_URL}/${name}`;
         cb(null, name);
     }
