@@ -9,10 +9,15 @@ class PostService {
 
         // send to every user
         for (const user of users) {
-            bot.api.sendPhoto(user.chat_id, `${process.env.STATIC_FILES_URL}/${newPost.image}`)
-            .then(() => {
+            if (newPost.image !== undefined) {
+                bot.api.sendPhoto(user.chat_id, `${process.env.STATIC_FILES_URL}/${newPost.image}`)
+                .then(() => {
+                    bot.api.sendMessage(user.chat_id, newPost.text, { parse_mode: 'HTML' });
+                });
+            } else {
                 bot.api.sendMessage(user.chat_id, newPost.text, { parse_mode: 'HTML' });
-            })
+            }
+
         }
 
     }

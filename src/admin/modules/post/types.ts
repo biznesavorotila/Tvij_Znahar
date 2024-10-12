@@ -1,4 +1,4 @@
 export type TCreatePost = {
-    image: string;
+    image?: string;
     text: string;
 }
