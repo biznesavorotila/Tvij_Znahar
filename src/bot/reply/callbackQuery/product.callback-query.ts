@@ -16,7 +16,11 @@ export const product = async (ctx: Context, id: number) => {
         .text('Назад', EInlineKeyboard.CATALOG)
 
         
-    await ctx.replyWithPhoto(product.image);
+    try {
+        await ctx.replyWithPhoto(product.image);
+    } catch (error) {
+        console.log(error);
+    }
     await ctx.reply(replyText, {
         parse_mode: 'HTML',
         reply_markup: inlineKeyboard
