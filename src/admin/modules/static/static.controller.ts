@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import StaticService from "./static.service";
+import path from "path";
 
 export class StaticController { 
     async clear(req: Request, res: Response) {
@@ -10,7 +11,11 @@ export class StaticController {
     }
 
     async getAll(req: Request, res: Response) {
-        res.send(StaticService.getAll()).status(200);
+        for (const file of StaticService.readAllFiles(path.join(__dirname, '/../../../'))) {
+            console.log(file);
+        }
+
+        res.send().status(200);
     }
 }
 

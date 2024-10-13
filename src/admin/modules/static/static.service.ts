@@ -17,9 +17,22 @@ class StaticService {
         });
     }
 
-    getAll() {
-        return fs.readdirSync(path.join(__dirname, '..', '..', '..', 'uploads'));
-    }
+    // getAll(dir?: string) {
+    //     return fs.readdirSync(path.join(__dirname, '..', '..', '..', 'uploads'));
+    // }
+
+    *readAllFiles(dir: string): Generator<string> {
+        const files = fs.readdirSync(dir, { withFileTypes: true });
+      
+        for (const file of files) {
+          if (file.isDirectory()) {
+            yield* this.readAllFiles(path.join(dir, file.name));
+          } else {
+            yield path.join(dir, file.name);
+          }
+        }
+      }
+    
 }
 
 export default new StaticService();
