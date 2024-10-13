@@ -5,10 +5,14 @@ import { TProductCreate } from "./types";
 
 class ProductService {
     async create(newProduct: TProductCreate) {
-        return await dataSource.getRepository(ProductEntity).save({
-            ...newProduct,
-            parent: { id: newProduct.product_id }
-        });
+        if (!newProduct.product_id) {
+            return await dataSource.getRepository(ProductEntity).save(newProduct);
+        } else {
+            return await dataSource.getRepository(ProductEntity).save({
+                ...newProduct,
+                parent: { id: newProduct.product_id }
+            });
+        }
     }
 
     async getAll(isCatalog?: boolean | undefined) {
