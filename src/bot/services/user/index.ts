@@ -4,7 +4,9 @@ import { TUpdatePhonoe, TUserCreate } from "./types";
 
 export class UserService {
     static async save(user: Partial<TUserCreate>) {
-        return await dataSource.getRepository(UserEntity).save(user);
+        const exist = await dataSource.getRepository(UserEntity).exists({ where: { chat_id: user.chat_id } });
+        if (!exist) 
+            return await dataSource.getRepository(UserEntity).save(user);
     }
 
     static async updatePhone(data: TUpdatePhonoe) {
