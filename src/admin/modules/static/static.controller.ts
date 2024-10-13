@@ -11,7 +11,7 @@ export class StaticController {
     }
 
     async getAll(req: Request, res: Response) {
-        for (const file of StaticService.readAllFiles(path.join(__dirname, '/../../../'))) {
+        for (const file of StaticService.getAll()) {
             console.log(file);
         }
 
