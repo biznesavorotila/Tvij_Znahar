@@ -5,7 +5,7 @@ export class UserEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ type: 'int' })
+    @Column({ type: 'bigint' })
     chat_id: number;
 
     @Column({ type: 'varchar', nullable: true })
