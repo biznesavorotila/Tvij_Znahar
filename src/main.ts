@@ -17,7 +17,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 async function bootstrap() {
     // init database connection
     dataSource.initialize()
-        .then(() => console.log("Data Source has been initialized! ✅"))
+        .then(() => console.log("Data Source (db) has been initialized! ✅"))
         .catch((err) => console.error("Error during Data Source initialization: ", err));
 
     // init bot

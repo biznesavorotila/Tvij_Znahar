@@ -11,10 +11,14 @@ export const product = async (ctx: Context, id: number) => {
     `${product.description}\n\n` +
     `💸<b>${product.price}</b> грн.💸`
 
+    let backButton: string = EInlineKeyboard.CATALOG;
+    if (product.parent) {
+        backButton = `${EInlineKeyboard.PRODUCT}_${product.parent.id.toString()}_${product.isCatalog.toString()}`;
+    }
+
     const inlineKeyboard = new InlineKeyboard()
         .text('Додати до кошика', `${EInlineKeyboard.ADD_TO_CART}_${id}`).row()
-        .text('Назад', EInlineKeyboard.CATALOG)
-
+        .text('Назад', backButton)
         
     try {
         await ctx.replyWithPhoto(product.image);
