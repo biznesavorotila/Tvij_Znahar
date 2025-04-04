@@ -13,9 +13,9 @@ export const product = async (ctx: Context, id: number) => {
 
     let backButton: string = EInlineKeyboard.CATALOG;
     if (product.parent) {
-        backButton = `${EInlineKeyboard.PRODUCT}_${product.parent.id.toString()}_${product.isCatalog.toString()}`;
+        backButton = `${EInlineKeyboard.PRODUCT}_${product.parent.id.toString()}_${product.parent.isCatalog.toString()}`;
     }
-
+    
     const inlineKeyboard = new InlineKeyboard()
         .text('Додати до кошика', `${EInlineKeyboard.ADD_TO_CART}_${id}`).row()
         .text('Назад', backButton)

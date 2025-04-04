@@ -21,4 +21,5 @@ export const dataSource = new DataSource({
     database: dbName,
     entities: ['src/database/**/*.entity{.ts,.js}'],
     synchronize: true,
+    logging: true,
 })

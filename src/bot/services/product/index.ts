@@ -24,6 +24,7 @@ export class ProductService {
         return await dataSource
             .getRepository(ProductEntity)
             .createQueryBuilder('product')
+            .leftJoinAndSelect('product.parent', 'parent')
             .where('product.id = :id', { id })
             .orderBy('product.id', 'DESC')
             .getOne();

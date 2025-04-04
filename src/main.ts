@@ -18,7 +18,8 @@ async function bootstrap() {
     // init database connection
     dataSource.initialize()
         .then(() => console.log("Data Source (db) has been initialized! ✅"))
-        .catch((err) => console.error("Error during Data Source initialization: ", err));
+        .catch((err) => console.error("Error during Data Source initialization: ", err))
+        .finally(() => console.log("Finnaly db"));
 
     // init bot
     bot.start().catch((err) => {
