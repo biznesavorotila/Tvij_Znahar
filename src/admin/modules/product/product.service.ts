@@ -1,6 +1,7 @@
 import { dataSource } from "../../../database/data-source";
 import { CartEntity } from "../../../database/entity/cart.entity";
 import { ProductEntity } from "../../../database/entity/product.entity";
+import staticService from "../static/static.service";
 import { TProductCreate } from "./types";
 
 class ProductService {
@@ -48,12 +49,27 @@ class ProductService {
             .delete()
             .execute();
 
-        await dataSource.getRepository(ProductEntity)
+        
+        // 1. Fetch the products that will be deleted
+        const productsToDelete = await dataSource.getRepository(ProductEntity)
             .createQueryBuilder('product')
-            .where('product.id = :productId', { productId })
-            .orWhere('product.parent.id = :productId', { productId }) // all child products
-            .delete()
-            .execute();
+            .leftJoinAndSelect('product.parent', 'parent')
+            .where('product.id = :productId OR parent.id = :productId', { productId })
+            .getMany();
+
+        if (!productsToDelete.length) {
+            console.log('Product not found');
+            return;
+        }
+
+        // 2. Delete them in a transaction
+        await dataSource.transaction(async (transactionalEntityManager) => {
+            await transactionalEntityManager.remove(productsToDelete);
+        });
+
+        for (const product of productsToDelete) {
+            await staticService.remove(product.image);
+        }
     }
 }
 
