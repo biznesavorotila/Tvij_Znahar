@@ -11,10 +11,12 @@ export const productCatalog = async (ctx: MyContext, parentId: number) => {
 
     const inlineKeyboard = new InlineKeyboard();
     products.forEach(product => {
-        inlineKeyboard.text(
-            `${product.name} - ${product.price} грн.`, 
-            `${EInlineKeyboard.PRODUCT}_${product.id}`
-        ).row();
+        if (product.isPublished) {
+            inlineKeyboard.text(
+                `${product.name} - ${product.price} грн.`, 
+                `${EInlineKeyboard.PRODUCT}_${product.id}`
+            ).row();
+        }
     });
     inlineKeyboard.text('Назад ⬅️', EInlineKeyboard.CATALOG);
     const replyText = `📦 Каталог <b>${parentProduct.name}</b> 📦\n\n` +

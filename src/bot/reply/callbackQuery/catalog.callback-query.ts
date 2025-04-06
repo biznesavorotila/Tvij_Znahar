@@ -10,10 +10,12 @@ export const catalog = async (ctx: Context) => {
 
     const inlineKeyboard = new InlineKeyboard();
     products.forEach(product => {
-        inlineKeyboard.text(
-            `${product.name} ${ product.price ? `- ${product.price} грн.` : '' }`, 
-            `${EInlineKeyboard.PRODUCT}_${product.id.toString()}_${product.isCatalog.toString()}`
-        ).row();
+        if (product.isPublished) {
+            inlineKeyboard.text(
+                `${product.name} ${ product.price ? `- ${product.price} грн.` : '' }`, 
+                `${EInlineKeyboard.PRODUCT}_${product.id.toString()}_${product.isCatalog.toString()}`
+            ).row();
+        }
     });
     
     await ctx.replyWithPhoto(imageUrl, {
