@@ -48,7 +48,12 @@ class ProductService {
             .delete()
             .execute();
 
-        await dataSource.getRepository(ProductEntity).delete({ id: productId });
+        await dataSource.getRepository(ProductEntity)
+            .createQueryBuilder('product')
+            .where('product.id = :productId', { productId })
+            .orWhere('product.parent.id = :productId', { productId }) // all child products
+            .delete()
+            .execute();
     }
 }
 

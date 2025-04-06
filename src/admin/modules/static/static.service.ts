@@ -17,6 +17,15 @@ class StaticService {
         });
     }
 
+    remove(filename: string) {
+        const filepath = path.join(__dirname, '..', '..', '..', 'uploads', filename);
+        if (fs.existsSync(filepath)) {
+            fs.unlink(filename, (err) => {
+                console.log(err);
+            });
+        }
+    }
+
     getAll() {
         return fs.readdirSync(path.join(__dirname, '..', '..', '..', 'uploads'));
     }   
