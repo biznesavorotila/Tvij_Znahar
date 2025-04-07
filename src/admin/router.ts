@@ -23,4 +23,4 @@ router.post('/post/create', upload.single('image'), PostController.createOne);
 
 // Static files
 router.use('/static/clear', StaticController.clear);
-router.use('/static/getAll', StaticController.getAll);
+router.use('/static/getAll', StaticController.getAllString);
