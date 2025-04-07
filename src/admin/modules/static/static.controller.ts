@@ -14,6 +14,7 @@ export class StaticController {
         const arr: Array<String> = new Array();
         for (const file of StaticService.getAll()) {
             arr.push(file);
+            console.log(file);
         }
 
         res.send(arr).status(200);
