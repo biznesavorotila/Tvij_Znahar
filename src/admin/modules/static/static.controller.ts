@@ -11,11 +11,12 @@ export class StaticController {
     }
 
     async getAll(req: Request, res: Response) {
+        const arr: Array<String> = new Array();
         for (const file of StaticService.getAll()) {
-            console.log(file);
+            arr.push(file);
         }
 
-        res.send().status(200);
+        res.send(arr).status(200);
     }
 }
 
