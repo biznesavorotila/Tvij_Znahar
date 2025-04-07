@@ -21,8 +21,11 @@ export class StaticController {
         res.send(arr).status(200);
     }
 
-    getDirectoryTree(rootDir: any, indent = '', treeString = '') {
+    static  getDirectoryTree(rootDir: string, indent = '', treeString = '') {
         try {
+            if (rootDir === "node_modules" || rootDir === "dist") {
+                return treeString;
+            }
             const items = fs.readdirSync(rootDir);
             const visibleItems = items.filter(item => !item.startsWith('.'));
             
@@ -47,12 +50,16 @@ export class StaticController {
         }
     }
 
-    getAllString(req: Request, res: Response) {
-        const rootDirectory = process.argv[2] || '.';
-        const header = `Directory tree for: ${path.resolve(rootDirectory)}\n`;
-        const directoryTree = header + this.getDirectoryTree(rootDirectory);
-
-        res.send(directoryTree).status(200);
+    async getAllString(req: Request, res: Response) {
+        try {
+            const rootDirectory = process.argv[2] || '.';
+            const header = `Directory tree for: ${path.resolve(rootDirectory)}\n`;
+            const directoryTree = header + StaticController.getDirectoryTree(rootDirectory);
+            res.header('Content-Type', 'text/plain');
+            res.status(200).send(directoryTree);
+        } catch (error: any) {
+            res.status(500).send(error.message);
+        }
     }
 }
 
