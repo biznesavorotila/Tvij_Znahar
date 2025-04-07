@@ -21,6 +21,10 @@ async function bootstrap() {
             console.log("Data Source (db) has been initialized! ✅")
 
             // init bot
+            bot.catch(async (err) => {
+                console.error(err);
+                await err.ctx.reply(`Произошла ошибка! ${Date.now().toLocaleString()}\n${err.message}\n${err?.cause}`);
+            });
             bot.start().catch((err) => {
                 console.error(err)
             });

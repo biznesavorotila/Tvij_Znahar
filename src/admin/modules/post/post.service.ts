@@ -2,6 +2,8 @@ import { bot } from "../../../bot/bot";
 import { UserService } from "../../../bot/services/user";
 import { TCreatePost } from "./types";
 
+// const parse_mode = process.env.PARSE_MODE?.toString() || "MarkdownV2";
+
 class PostService {
     async createPost(newPost: TCreatePost) {
         // get all users
@@ -15,13 +17,11 @@ class PostService {
                 } catch (error) {
                     console.log(error);
                 }
-                bot.api.sendMessage(user.chat_id, newPost.text, { parse_mode: 'HTML' });
+                bot.api.sendMessage(user.chat_id, newPost.text, { parse_mode: "HTML" });
             } else {
-                bot.api.sendMessage(user.chat_id, newPost.text, { parse_mode: 'HTML' });
+                bot.api.sendMessage(user.chat_id, newPost.text, { parse_mode: "HTML" });
             }
-
         }
-
     }
 }
 
