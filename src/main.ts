@@ -9,10 +9,11 @@ config();
 
 const app = express();
 
+app.use(cors({ origin: "*" }))
 app.use(express.json());
-app.use(cors({ origin: ["https://tvijznaharadmin-production.up.railway.app", "https://tvijznahar-production-e99f.up.railway.app/"] }))
 app.use('/api', router);
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use(cors({ origin: "*" }))
 
 async function bootstrap() {
     // init database connection
