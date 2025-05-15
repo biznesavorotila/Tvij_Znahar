@@ -18,7 +18,7 @@ const storage = multer.diskStorage({
 
         // const splits = file.originalname.split('.');
         const name = crypto.randomUUID() + "." + file.mimetype.split('/')[1];
-        req.body.image = `${uploadsPath}/${name}`;
+        req.body.image = `${process.env.STATIC_FILES_URL}/${name}`;
         cb(null, name);
     }
   })
