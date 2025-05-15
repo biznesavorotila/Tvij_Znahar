@@ -9,16 +9,20 @@ const storage = multer.diskStorage({
     },
     filename: function (req, file, cb) {
         console.log("file => ", file);
-        const uploadsUrl = process.env.STATIC_FILES_URL as string
+        const uploadsPath = path.join(
+          (process.env.STATIC_FILES_URL as string).replace("/uploads", ""),
+          "src",
+          "uploads"
+        )
 
         // create if not exits
-        if (!fs.existsSync(uploadsUrl)) {
-          fs.mkdirSync(uploadsUrl)
+        if (!fs.existsSync(uploadsPath)) {
+          fs.mkdirSync(uploadsPath)
         }
 
-        const splits = file.originalname.split('.');
+        // const splits = file.originalname.split('.');
         const name = crypto.randomUUID() + "." + file.mimetype.split('/')[1];
-        req.body.image = `${uploadsUrl}/${name}`;
+        req.body.image = `${uploadsPath}/${name}`;
         cb(null, name);
     }
   })
