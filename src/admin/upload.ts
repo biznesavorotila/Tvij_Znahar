@@ -9,11 +9,7 @@ const storage = multer.diskStorage({
     },
     filename: function (req, file, cb) {
         console.log("file => ", file);
-        const uploadsPath = path.join(
-          (process.env.STATIC_FILES_URL as string).replace("/uploads", ""),
-          "src",
-          "uploads"
-        )
+        const uploadsPath = path.join(__dirname, '..', 'uploads')
 
         // create if not exits
         if (!fs.existsSync(uploadsPath)) {
