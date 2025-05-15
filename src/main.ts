@@ -12,7 +12,7 @@ const app = express();
 app.use(cors({
   origin: 'https://tvijznaharadmin-production.up.railway.app',
   methods: ['GET','POST','PATCH','PUT','DELETE'],
-  allowedHeaders: ['Content-Type','Authorization'],
+//   allowedHeaders: ['Content-Type','Authorization'],
 }));
 app.use(express.json());
 app.use('/api', router);
